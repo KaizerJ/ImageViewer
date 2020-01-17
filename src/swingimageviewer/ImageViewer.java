@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 import model.Image;
 import persistence.FileImageLoader;
 import view.ImageDisplay;
@@ -21,7 +22,10 @@ public class ImageViewer extends JFrame {
     private final Map<String,Command> commands = new HashMap<>();
     
     public static void main(String[] args) {
-        File file = new File("C:\\Users\\Jonay\\Pictures\\Vicente\\Fotos Milanuncios");
+        File file = new File("C:\\Users\\Jonay\\Pictures");
+        try { 
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); 
+        } catch(Exception ignored){}
         FileImageLoader imageLoader = new FileImageLoader(file);
         Image image = imageLoader.loadImages();
         new ImageViewer().getImageDisplay().show(image);
