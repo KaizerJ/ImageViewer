@@ -27,7 +27,10 @@ public class SwingImageDisplay extends JPanel implements ImageDisplay {
         if(currentImage == null)
             return;
         g.clearRect(0,0,this.getWidth(),this.getHeight());
-        g.drawImage(imageOf(currentImage),0,0,null);
+        BufferedImage image = imageOf(currentImage);
+        int posX = (this.getWidth()-image.getWidth())/2;
+        int posY = (this.getHeight()-image.getHeight())/2;
+        g.drawImage(image,posX,posY,null);
     }
 
     private BufferedImage imageOf(Image image) {
