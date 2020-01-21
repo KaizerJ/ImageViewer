@@ -1,5 +1,6 @@
 package swingimageviewer;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -28,9 +29,18 @@ public class SwingImageDisplay extends JPanel implements ImageDisplay {
             return;
         g.clearRect(0,0,this.getWidth(),this.getHeight());
         BufferedImage image = imageOf(currentImage);
-        int posX = (this.getWidth()-image.getWidth())/2;
-        int posY = (this.getHeight()-image.getHeight())/2;
-        g.drawImage(image,posX,posY,null);
+        double ratio = 1;
+        if(image.getWidth() > this.getWidth() || 
+                image.getHeight() > this.getHeight()){
+            double widthRatio = (double) image.getWidth() / this.getWidth();
+            double heightRatio = (double) image.getHeight() / this.getHeight();
+            ratio = widthRatio > heightRatio ? widthRatio : heightRatio;
+        }
+        int dimX = (int) (image.getWidth() / ratio);
+        int dimY = (int) (image.getHeight() / ratio);
+        int posX = (this.getWidth()-dimX)/2;
+        int posY = (this.getHeight()-dimY)/2;
+        g.drawImage(image, posX, posY, dimX, dimY, null);
     }
 
     private BufferedImage imageOf(Image image) {
